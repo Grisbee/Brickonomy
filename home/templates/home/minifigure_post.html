@@ -4,34 +4,32 @@
 <div class="container mt-4">
     <div class="row justify-content-center">
         <div class="col-md-8">
-        {% for minifigure in minifigure_post %}
             <div class="card">
                 <div class="card-body">
                     <div class="media mb-4">
                         <div class="media-body">
-                            <h3 class="mt-0"> <a href='{% url 'minifigures-post' minifigure.id %}' class="btn-outline-dark font-weight-bold">{{ minifigure.character_name }}</a>
+                            <h3 class="mt-0"> <h3 class="mt-0"> <b>{{ object.character_name }}</b>
 
                             <small class="text-muted">
                                     {% if minifigure.if_custom %}
-                                       Custom Minifigure <span class="badge bg-dark text-white float-right">{{ minifigure.estimated_price }}$  </span>
+                                       Custom Minifigure <span class="badge bg-dark text-white float-right">{{ object.estimated_price }}$  </span>
                                     {% else %}
-                                       Official Minifigure <span class="float-right">{{ minifigure.estimated_price }}$  </span>
+                                       Official Minifigure <span class="float-right">{{ object.estimated_price }}$  </span>
                                     {% endif %}
                                 </small>
-                            </h3>
-                            <small class="text-muted">By <a href="#" class="btn-outline-dark">{{ minifigure.owner }}</a></small>
+                            </h3></h3>
+                            <small class="text-muted">By <a href="#" class="btn-outline-dark">{{ object.owner }}</a></small>
 
                             <p class="mb-1">
                             </p>
                             <p class="mb-1"></p>
 
-                            <p class="mb-1" ><em>{{ minifigure.description }}</em></p>
+                            <p class="mb-1" ><em>{{ object.description }}</em></p>
                         </div>
                     </div>
                 </div>
             </div>
             <p></p>
-        {% endfor %}
         </div>
     </div>
 </div>
