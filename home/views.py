@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.generic import ListView, DetailView, CreateView
-from .models import Set
+from .models import Set, User
 from .models import Minifigure
 
 
@@ -39,4 +39,12 @@ class MinifigureCreateView(CreateView):
 
 
 def explore(request):
-    return render(request, "home/explore_page.html")
+    return render(request, "home/explore.html")
+
+
+class ExploreMinifigures(ListView):
+    model = Minifigure
+    template_name = 'home/explore_minifigures.html'
+    context_object_name = 'minifigure_post'
+    ordering = 'date_added'
+

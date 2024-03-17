@@ -4,14 +4,13 @@
 <div class="container mt-4">
     <div class="row justify-content-center">
         <div class="col-md-8">
-        <p>{{ count_of_figures }}</p>
         {% for minifigure in minifigure_post %}
-            {% if minifigure.owner.username == user.username %}
             <div class="card">
                 <div class="card-body">
                     <div class="media mb-4">
                         <div class="media-body">
                             <h3 class="mt-0"> <a href='{% url 'minifigures-post' minifigure.id %}' class="btn-outline-dark font-weight-bold">{{ minifigure.character_name }}</a>
+
                             <small class="text-muted">
                                     {% if minifigure.if_custom %}
                                        Custom Minifigure <span class="badge bg-dark text-white float-right">{{ minifigure.estimated_price }}$  </span>
@@ -25,19 +24,13 @@
                             <p class="mb-1">
                             </p>
                             <p class="mb-1"></p>
+
                             <p class="mb-1" ><em>{{ minifigure.description }}</em></p>
                         </div>
                     </div>
                 </div>
             </div>
             <p></p>
-                {% else %}
-                <div class="card">
-                <div class="card-body">
-                    cu
-                </div>
-                </div>
-            {% endif %}
         {% endfor %}
         </div>
     </div>

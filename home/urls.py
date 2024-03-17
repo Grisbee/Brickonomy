@@ -8,5 +8,6 @@ urlpatterns = [
     path('minifigure_post/new/', views.MinifigureCreateView.as_view(), name="minifigures-create"),
     path('sets', views.sets, name="sets-page"),
     path('', views.home, name="home-page"),
-    path('explore', views.explore, name="explore-page")
+    path('explore/', views.explore, name="explore-page"),
+    path('explore/explore_minifigures', views.ExploreMinifigures.as_view(), name="explore-minifigures"),
 ]
