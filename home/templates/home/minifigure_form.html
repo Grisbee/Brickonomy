@@ -3,17 +3,33 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
+    <style>
+    .custom-btn{
+        color: white;
+        background-color: #7d6608;
+        padding: 7px 15px;
+        transition: background-color 0.3s;
+        border-radius: 10px;
+        border-color: black;
+    }
+    .custom-btn:hover{
+        background-color: goldenrod;
+        color: white;
+        border-color: black;
+    }
+    </style>
+    <div style="height: 20px"></div>
     <div class="content-section">
         <form method="POST">
             {% csrf_token %}
             <fieldset class="form-group">
                 <legend class='border-bottom mb-4'>
-                    Add new minifigure
+                    Add a new minifigure
                 </legend>
                 {{ form|crispy }}
             </fieldset>
             <div class="form-group">
-                <button class="btn btn-outline-info" type="submit">Submit</button>
+                <button class="custom-btn btn-outline-light" type="submit">Submit</button>
             </div>
         </form>
     </div>

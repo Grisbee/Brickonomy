@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
-
+from django.urls import reverse
 
 # Create your models here.
 class Set(models.Model):
@@ -14,6 +14,13 @@ class Set(models.Model):
     date_added = models.DateTimeField(default=timezone.now)
 
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    owner_name = models.CharField(max_length=20, default='default_user')
+
+    def save(self, *args, **kwargs):
+        if self.owner:
+            self.owner_name = self.owner.username
+        super().save(*args, **kwargs)
+
 
     def __str__(self):
         return self.name
@@ -29,7 +36,15 @@ class Minifigure(models.Model):
     date_added = models.DateTimeField(default=timezone.now)
 
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    owner_name = models.CharField(max_length=20, default='default_user')
 
     def __str__(self):
         return self.character_name
 
+    def save(self, *args, **kwargs):
+        if self.owner:
+            self.owner_name = self.owner.username
+        super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse("minifigures-post", kwargs={'pk': self.pk})

@@ -1,10 +1,32 @@
 {% extends "home/base.html" %}
 
 {% block content %}
+
+    <style>
+    .custom-btn{
+        background-color: #7d6608;
+        color: white;
+
+        border-radius: 20px;
+        padding: 10px 40px;
+        font-size: 24px;
+        transition: background-color 0.3s, color 0.3s;
+    }
+    .custom-btn:hover{
+        background-color: goldenrod;
+        color: white;
+    }
+    </style>
+
 <div class="container mt-4">
     <div class="row justify-content-center">
         <div class="col-md-8">
-        <p>{{ count_of_figures }}</p>
+        {% if user.username %}
+            <div class="text-center">
+            <a href="{% url 'minifigures-create' %}" class="custom-btn text-center"> + </a>
+            </div>
+            <div style="height: 20px"></div>
+        {% if user_minifigures_count != 0 %}
         {% for minifigure in minifigure_post %}
             {% if minifigure.owner.username == user.username %}
             <div class="card">
@@ -31,14 +53,22 @@
                 </div>
             </div>
             <p></p>
-                {% else %}
-                <div class="card">
-                <div class="card-body">
-                    cu
-                </div>
-                </div>
             {% endif %}
         {% endfor %}
+        {% else %}
+            <div class="card">
+                <div class="card-body text-center font-weight-bold">
+                    Seems like you haven't added any figures yet!
+                </div>
+            </div>
+        {% endif %}
+        {% else %}
+            <div class="card">
+            <div class="card-body text-center font-weight-bold">
+                You need to be logged in to access this feature! <a href='/brickonomy/login' class="btn-outline-dark">Log in now!</a>
+            </div>
+            </div>
+        {% endif %}
         </div>
     </div>
 </div>
