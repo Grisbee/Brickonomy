@@ -4,18 +4,6 @@
 
 {% block content %}
     <style>
-    .custom-btn{
-        color: white;
-        background-color: #7d6608;
-        padding: 7px 15px;
-        transition: background-color 0.3s;
-        border-radius: 10px;
-        border-color: transparent;
-    }
-    .custom-btn:hover{
-        background-color: goldenrod;
-        color: white;
-    }
     .custom-card {
         border: 2px solid black;
         border-radius: 20px;
@@ -36,24 +24,6 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
-
-<div style="height: 15px"></div>
-
-<div class="row justify-content-center">
-    <div class="col-md-7">
-        <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            <fieldset class="form-group">
-                <legend class="border-bottom mb-4">Profile Info</legend>
-                {{ user_form|crispy }}
-                {{ profile_form|crispy }}
-            </fieldset>
-            <div class="form-group">
-                <button class="custom-btn" type="submit">Update Profile</button>
-            </div>
-        </form>
     </div>
 </div>
 {% endblock content %}

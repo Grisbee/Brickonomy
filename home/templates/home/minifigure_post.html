@@ -25,7 +25,13 @@
                             <p class="mb-1"></p>
 
                             <p class="mb-1" ><em>{{ object.description }}</em></p>
-                        </div>
+                            <div class="bottom-text text-right">
+                                {% if minifigure.owner.username == user.username %}
+                                <small class="text-muted">
+                                    <a href="{% url "minifigures-update" minifigure.id %}" class="text-muted">Edit</a>
+                                </small></div>
+                                {% endif %}
+                            </div>
                     </div>
                 </div>
             </div>

@@ -15,6 +15,7 @@
     .custom-btn:hover{
         background-color: goldenrod;
         color: white;
+        text-decoration: none;
     }
     </style>
 
@@ -27,13 +28,16 @@
             </div>
             <div style="height: 20px"></div>
         {% if user_minifigures_count != 0 %}
-        {% for minifigure in minifigure_post %}
+        {% for minifigure in minifigure_list %}
             {% if minifigure.owner.username == user.username %}
             <div class="card">
                 <div class="card-body">
                     <div class="media mb-4">
                         <div class="media-body">
-                            <h3 class="mt-0"> <a href='{% url 'minifigures-post' minifigure.id %}' class="btn-outline-dark font-weight-bold">{{ minifigure.character_name }}</a>
+                            <h3 class="mt-0">
+                                <a href='{% url 'minifigures-post' minifigure.id %}' class="btn-outline-dark font-weight-bold">
+                                    {{ minifigure.character_name }}
+                                </a>
                             <small class="text-muted">
                                     {% if minifigure.if_custom %}
                                        Custom Minifigure <span class="badge bg-dark text-white float-right">{{ minifigure.estimated_price }}$  </span>
@@ -42,7 +46,7 @@
                                     {% endif %}
                                 </small>
                             </h3>
-                            <small class="text-muted">By <a href="#" class="btn-outline-dark">{{ minifigure.owner }}</a></small>
+                            <small class="text-muted">By <a href="{% url "view_profile" user.id %}" class="btn-outline-dark">{{ minifigure.owner }}</a></small>
 
                             <p class="mb-1">
                             </p>
@@ -69,6 +73,29 @@
             </div>
             </div>
         {% endif %}
+        </div>
+    <div>
+        <div style="height: 55px"><p>‎</p></div>
+
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <td><h5 class="font-weight-bold">Statistics</h5></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td> Total minifigures: {{ user_minifigures_count }}</td>
+                    </tr>
+                    <tr>
+                        {% if user_minifigures_value > 0 %}
+                            <td>Total value: {{ user_minifigures_value }}$</td>
+                        {% else %}
+                            <td>Total value: 0$</td>
+                        {% endif %}
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

@@ -19,6 +19,10 @@ from django.contrib.auth import views as auth_views
 from django.urls import path, include
 from home import views
 from users import views as users_views
+from django.conf import settings
+from django.conf.urls.static import static
+from users.views import ProfileView
+
 
 urlpatterns = [
     path('brickonomy/admin/', admin.site.urls),
@@ -26,5 +30,9 @@ urlpatterns = [
     path('brickonomy/login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
     path('brickonomy/logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
     path('brickonomy/profile', users_views.profile, name='profile'),
+    path('brickonomy/profile/<int:pk>/', users_views.ProfileView.as_view(), name='view_profile'),
     path('brickonomy/', include("home.urls")),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

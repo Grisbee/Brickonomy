@@ -22,7 +22,7 @@
                                     {% endif %}
                                 </small>
                             </h3>
-                            <small class="text-muted">By <a href="#" class="btn-outline-dark">{{ minifigure.owner }}</a></small>
+                            <small class="text-muted">By <a href="{% url "view_profile" minifigure.owner.id %}" class="btn-outline-dark">{{ minifigure.owner }}</a></small>
 
                             <p class="mb-1">
                             </p>
