@@ -20,7 +20,7 @@
     </style>
     <div style="height: 20px"></div>
     <div class="content-section">
-        <form method="POST">
+        <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <fieldset class="form-group">
                 {% block content1 %}

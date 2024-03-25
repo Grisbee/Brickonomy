@@ -47,7 +47,7 @@ class MinifigureDetailView(DetailView):
 class MinifigureCreateView(LoginRequiredMixin, CreateView):
     model = Minifigure
     fields = ['character_name', 'if_custom', 'era', 'description', 'estimated_price',
-              'quantity', 'date_added']
+              'quantity', 'date_added', 'image']
     login_url = reverse_lazy('login')
 
     def form_valid(self, form):
@@ -58,7 +58,7 @@ class MinifigureCreateView(LoginRequiredMixin, CreateView):
 class MinifigureUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Minifigure
     fields = ['character_name', 'if_custom', 'era', 'description', 'estimated_price',
-              'quantity', 'date_added']
+              'quantity', 'date_added', 'image']
     login_url = reverse_lazy('login')
     template_name = 'home/minifigure_update.html'
 
