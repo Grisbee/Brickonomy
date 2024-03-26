@@ -76,6 +76,17 @@ class MinifigureUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 def explore(request):
     return render(request, "home/explore.html")
 
+class MinifigureDeleteView(LoginRequiredMixin ,UserPassesTestMixin ,DeleteView):
+    model = Minifigure
+    template_name = 'home/minifigure_delete.html'
+    success_url = '/brickonomy/minifigures/'
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user == post.owner:
+            return True
+        return False
+
+
 
 class ExploreMinifigures(ListView):
     model = Minifigure

@@ -143,8 +143,7 @@ to do:
 -add filters
 -home page
 -sets
--add cover photo and other photos to posts
--deleting minifigures
+-add gallery to posts
 """
 # superuser: uzytkownik: pawel haslo: kanapa123
 

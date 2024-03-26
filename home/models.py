@@ -47,8 +47,16 @@ class Minifigure(models.Model):
     def save(self, *args, **kwargs):
         if self.owner:
             self.owner_name = self.owner.username
-        super().save(*args, **kwargs)
+        try:
+            old_instance = Minifigure.objects.get(pk=self.pk)
+            if old_instance.image != self.image:
 
+                if os.path.isfile(old_instance.image.path):
+                    os.remove(old_instance.image.path)
+        except Minifigure.DoesNotExist:
+            pass
+
+        super().save(*args, **kwargs)
 
         img = Image.open(self.image.path)
         min_dimension = min(img.width, img.height)
