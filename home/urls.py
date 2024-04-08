@@ -13,6 +13,8 @@ urlpatterns = [
     path('minifigure_post/<int:pk>/', views.MinifigureDetailView.as_view(), name="minifigures-post"),
     path('minifigure_post/<int:pk>/update/', views.MinifigureUpdateView.as_view(), name="minifigures-update"),
     path('minifigure_post/<int:pk>/delete/', views.MinifigureDeleteView.as_view(), name="minifigures-delete"),
+    path('minifigure_post/<int:pk>/add_photos/', views.AddPhotos.as_view(), name="add-photos"),
+    path('minifigure_post/<int:pk>/remove_photos/', views.RemovePhotos.as_view(), name="remove-photos"),
 
     path('sets', views.sets, name="sets-page"),
 ]

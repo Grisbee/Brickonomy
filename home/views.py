@@ -1,9 +1,10 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.views import View
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Set, User
 from django.urls import reverse_lazy
-from .models import Minifigure
+from .models import Minifigure, Gallery
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.db.models import Sum
 
@@ -43,6 +44,11 @@ class MinifigureDetailView(DetailView):
     model = Minifigure
     template_name = 'home/minifigure_post.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        images = Gallery.objects.filter(minifigure=self.get_object())
+        context['images'] = images
+        return context
 
 class MinifigureCreateView(LoginRequiredMixin, CreateView):
     model = Minifigure
@@ -76,7 +82,8 @@ class MinifigureUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 def explore(request):
     return render(request, "home/explore.html")
 
-class MinifigureDeleteView(LoginRequiredMixin ,UserPassesTestMixin ,DeleteView):
+
+class MinifigureDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Minifigure
     template_name = 'home/minifigure_delete.html'
     success_url = '/brickonomy/minifigures/'
@@ -93,4 +100,50 @@ class ExploreMinifigures(ListView):
     template_name = 'home/explore_minifigures.html'
     context_object_name = 'minifigure_post'
     ordering = 'date_added'
+
+
+class AddPhotos(LoginRequiredMixin, UserPassesTestMixin, View):
+    model = Gallery
+
+    def test_func(self):
+        pk = self.kwargs.get('pk')
+        fig = Minifigure.objects.filter(id=pk).first()
+        if self.request.user == fig.owner:
+            return True
+        return False
+
+
+    def get(self, request, pk):
+        fig = Minifigure.objects.filter(id=pk).first()
+        images = Gallery.objects.filter(minifigure=fig)
+        #images = Gallery.objects.filter(id =pk)
+        return render(request, "home/add_photos.html", {'images': images})
+    def post(self, request, pk):
+        images = request.FILES.getlist('images')
+        fig = Minifigure.objects.filter(id=pk).first()
+
+        for image in images:
+            Gallery.objects.create(images= image, minifigure=fig)
+
+        fig = Minifigure.objects.filter(id=pk).first()
+        images = Gallery.objects.filter(minifigure=fig)
+        return render(request, "home/add_photos.html", {'images': images} )
+
+
+class RemovePhotos(LoginRequiredMixin, UserPassesTestMixin, View):
+    model = Gallery
+
+    def test_func(self):
+        pk = self.kwargs.get('pk')
+        fig = Minifigure.objects.filter(id=pk).first()
+        if self.request.user == fig.owner:
+            return True
+        return False
+
+    def get(self, request, pk):
+        fig = Minifigure.objects.filter(id=pk).first()
+        images = Gallery.objects.filter(minifigure=fig)
+        return render(request, "home/remove_photos.html", {'images': images})
+    #jakiegoś checkboxa dać do zaznaczania które zdjęcia usunąć i połączyć go z pk zdjęcia
+
 

@@ -2,6 +2,11 @@
 
 {% block content %}
     <style>
+    .img-outline {
+        outline: 5px solid black;
+        border-radius: 355px;
+        box-shadow: 0 15px 2px rgba(0, 0, 0, 0.1);
+    }
     .btn{}
     </style>
 <div class="container mt-4">
@@ -11,7 +16,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="media mb-4">
-                    <img src="{{ minifigure.image.url }}" alt="Minifigure Image" class="rounded-circle account-img mr-3">
+                    <img src="{{ minifigure.image.url }}" alt="Minifigure Image" class="img-outline mr-3">
                         <div class="media-body">
                             <h3 class="mt-0"> <a href='{% url 'minifigures-post' minifigure.id %}' class="btn-outline-dark font-weight-bold">{{ minifigure.character_name }}</a>
 

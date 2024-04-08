@@ -144,6 +144,8 @@ to do:
 -home page
 -sets
 -add gallery to posts
+-change it so the change photos option doesnt pop up in explore section
+-change it so only the user can update the figure
 """
 # superuser: uzytkownik: pawel haslo: kanapa123
 

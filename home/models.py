@@ -1,9 +1,11 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 from django.urls import reverse
 from PIL import Image
 import os
+from django import forms
 
 # Create your models here.
 class Set(models.Model):
@@ -70,3 +72,26 @@ class Minifigure(models.Model):
 
     def get_absolute_url(self):
         return reverse("minifigures-post", kwargs={'pk': self.pk})
+
+
+class Gallery(models.Model):
+    minifigure = models.ForeignKey(Minifigure, on_delete=models.CASCADE)
+    images = models.ImageField(default="minifigure_default.png", upload_to="gallery")
+
+#to niżej dodane
+    def save(self, *args, **kwargs):
+        if self.minifigure.gallery_set.count() < 5:
+            super().save(*args, **kwargs)
+
+            img = Image.open(self.images.path)
+            min_dimension = min(img.width, img.height)
+            img = img.crop((0, 0, min_dimension, min_dimension))
+
+            if img.height > 512 or img.width > 512:
+                output_size = (512, 512)
+                img.thumbnail(output_size)
+                img.save(self.images.path)
+
+            #dodać else żeby wyrzucało jakiś error czy coś
+
+

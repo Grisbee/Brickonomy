@@ -1,0 +1,51 @@
+{% extends "home/base.html" %}
+
+{% block content %}
+    <style>
+    .custom-btn {
+        color: white;
+        background-color: #7d6608;
+        padding: 15px 25px;
+        border-radius: 10px;
+        transition: 0.3s;
+
+        border-color: transparent;
+    }
+    .custom-btn:hover{
+        background-color: goldenrod;
+        color: white;
+    }
+    .custom-btn2 {
+        color: white;
+        background-color: #7d6608;
+        padding: 16px 150px;
+        border-radius: 10px;
+        transition: 0.3s;
+        border-color: transparent;
+    }
+    .custom-btn2:hover{
+        background-color: goldenrod;
+        color: white;
+    }
+
+    </style>
+    <div style="height:50px"></div>
+    <div class="row justify-content-center" style="height: 100px">
+        <div class="col-md-20">
+
+    <form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+        <input  type="file" id="myCheckbox"  name="images" multiple class="custom-btn">
+
+        <button class="custom-btn2">Submit</button>
+
+    </form>
+        </div>
+    </div>
+
+    </div>
+    {% for img in images %}
+        <img src="{{ img.images.url }}" alt="Image">
+    {% endfor %}
+{% endblock %}
