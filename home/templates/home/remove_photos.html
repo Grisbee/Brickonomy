@@ -1,4 +1,53 @@
 {% extends "home/base.html" %}
 {% block content %}
 
+<style>
+.custom-frame {
+    outline: 3px solid darkgray;
+    width: 600px;
+    padding-left: 20px;
+    padding-bottom: 30px;
+    padding-top: 30px;
+    box-shadow: 0 7px 2px lightgray;
+}
+
+.custom-btn {
+    color: white;
+    background-color: #7d6608;
+    padding: 20px 30px;
+    transition: 0.3s;
+    border-radius: 15px;
+    border-color: transparent;
+}
+
+.custom-btn:hover {
+    background-color: goldenrod;
+}
+</style>
+
+<form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div style="height: 50px"></div>
+                {% for img in images %}
+                <div style="height: 30px"></div>
+                <div class="card custom-frame">
+                    <div class="text-center">
+                            <img src="{{ img.images.url }}" alt="Image" style="width: 200px; border-radius: 10px">
+                        <div style="height: 20px"></div>
+                        </div>
+                            <form method="post" class="remove-form">
+                                {% csrf_token %}
+                                <div class="media-body">
+                                    <input type="hidden" name="image_id" value="{{ img.pk }}">
+                                    <button type="submit" class="custom-btn mx-auto d-block">Remove</button>
+                                </div>
+                            </form>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+</form>
+    <div style="height: 80px"></div>
 {% endblock content %}

@@ -16,7 +16,7 @@
         text-decoration: none;
     }
     .img-outline2 {
-        border: 3px solid black;
+        border: 3px solid darkgray;
         border-radius: 20px;
         box-shadow: 0 7px 2px rgba(0, 0, 0, 0.1);
 
@@ -76,7 +76,7 @@
                 <div  style="height: 30px"></div>
                 <div class="text-center"><a class="custom-btn" href="{% url "add-photos" minifigure.id %}">Add more photos</a></div>
                 <div  style="height: 50px"></div>
-                <div class="text-center"><a class="custom-btn" href="#">Delete Photos</a></div>
+                <div class="text-center"><a class="custom-btn" href={% url "remove-photos" minifigure.id %}>Delete Photos</a></div>
                 <div  style="height: 50px"></div>
             {% endif %}
         </div>

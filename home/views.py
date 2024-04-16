@@ -7,6 +7,7 @@ from django.urls import reverse_lazy
 from .models import Minifigure, Gallery
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.db.models import Sum
+import os
 
 
 def home(request):
@@ -144,6 +145,23 @@ class RemovePhotos(LoginRequiredMixin, UserPassesTestMixin, View):
         fig = Minifigure.objects.filter(id=pk).first()
         images = Gallery.objects.filter(minifigure=fig)
         return render(request, "home/remove_photos.html", {'images': images})
-    #jakiegoś checkboxa dać do zaznaczania które zdjęcia usunąć i połączyć go z pk zdjęcia
+
+    def post(self, request, pk):
+        image_id = request.POST.get('image_id')
+
+        image_to_delete = Gallery.objects.filter(id=image_id).first()
+        image_path = image_to_delete.images.path
+        image_to_delete.delete()
+        os.remove(image_path)
+
+
+
+        fig = Minifigure.objects.filter(id=pk).first()
+        images = Gallery.objects.filter(minifigure=fig)
+
+        return render(request, "home/remove_photos.html", {'images': images})
+
+    #dodać żeby usuwało zdjęcia z galerii
+
 
 

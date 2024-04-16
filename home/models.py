@@ -7,7 +7,7 @@ from PIL import Image
 import os
 from django import forms
 
-# Create your models here.
+
 class Set(models.Model):
     name = models.CharField(max_length=20, editable=True)
     if_moc = models.BooleanField(editable=True)

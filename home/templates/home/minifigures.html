@@ -1,106 +1,104 @@
 {% extends "home/base.html" %}
 
 {% block content %}
-
     <style>
-    .custom-btn{
-        background-color: #7d6608;
-        color: white;
+        .custom-btn {
+            background-color: #7d6608;
+            color: white;
+            border-radius: 20px;
+            padding: 10px 40px;
+            font-size: 24px;
+            transition: background-color 0.3s, color 0.3s;
+        }
 
-        border-radius: 20px;
-        padding: 10px 40px;
-        font-size: 24px;
-        transition: background-color 0.3s, color 0.3s;
-    }
-    .custom-btn:hover{
-        background-color: goldenrod;
-        color: white;
-        text-decoration: none;
-    }
-    .img-outline {
-        outline: 5px solid black;
-        border-radius: 355px;
-        box-shadow: 0 15px 2px rgba(0, 0, 0, 0.1);
-    }
+        .custom-btn:hover {
+            background-color: goldenrod;
+            color: white;
+            text-decoration: none;
+        }
+
+        .img-outline {
+            outline: 5px solid black;
+            border-radius: 355px;
+            box-shadow: 0 15px 2px rgba(0, 0, 0, 0.1);
+        }
     </style>
 
-<div class="container mt-4">
-    <div class="row justify-content-center">
-        <div class="col-md-10">
-        {% if user.username %}
-            <div class="text-center">
-            <a href="{% url 'minifigures-create' %}" class="custom-btn text-center"> + </a>
-            </div>
-            <div style="height: 20px"></div>
-        {% if user_minifigures_count != 0 %}
-        {% for minifigure in minifigure_list %}
-            {% if minifigure.owner.username == user.username %}
-            <div class="card">
-                <div class="card-body">
-                    <div class="media mb-4">
-                    <img src="{{ minifigure.image.url }}" alt="Minifigure Image" class="account-img mr-3 img-outline ">
-                        <div class="media-body">
-                            <h3 class="mt-0">
-                                <a href='{% url 'minifigures-post' minifigure.id %}' class="btn-outline-dark font-weight-bold">
-                                    {{ minifigure.character_name }}
-                                </a>
-                            <small class="text-muted">
-                                    {% if minifigure.if_custom %}
-                                       Custom Minifigure <span class="badge bg-dark text-white float-right">{{ minifigure.estimated_price }}$  </span>
-                                    {% else %}
-                                       Official Minifigure <span class="float-right">{{ minifigure.estimated_price }}$  </span>
-                                    {% endif %}
-                                </small>
-                            </h3>
-                            <p class="mb-1">
-                            </p>
-                            <p class="mb-1"></p>
-                            <p class="mb-1" ><em>{{ minifigure.description }}</em></p>
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                {% if user.username %}
+                    <div class="text-center">
+                        <a href="{% url 'minifigures-create' %}" class="custom-btn text-center"> + </a>
+                    </div>
+                    <div style="height: 20px"></div>
+                    {% if user_minifigures_count != 0 %}
+                        {% for minifigure in minifigure_list %}
+                            {% if minifigure.owner.username == user.username %}
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="media mb-4">
+                                            <img src="{{ minifigure.image.url }}" alt="Minifigure Image" class="account-img mr-3 img-outline ">
+                                            <div class="media-body">
+                                                <h3 class="mt-0">
+                                                    <a href='{% url 'minifigures-post' minifigure.id %}' class="btn-outline-dark font-weight-bold">
+                                                        {{ minifigure.character_name }}
+                                                    </a>
+                                                    <small class="text-muted">
+                                                        {% if minifigure.if_custom %}
+                                                            Custom Minifigure <span class="badge bg-dark text-white float-right">{{ minifigure.estimated_price }}$  </span>
+                                                        {% else %}
+                                                            Official Minifigure <span class="float-right">{{ minifigure.estimated_price }}$  </span>
+                                                        {% endif %}
+                                                    </small>
+                                                </h3>
+                                                <p class="mb-1"></p>
+                                                <p class="mb-1"></p>
+                                                <p class="mb-1"><em>{{ minifigure.description }}</em></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p></p>
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        <div class="card">
+                            <div class="card-body text-center font-weight-bold">
+                                Seems like you haven't added any figures yet!
+                            </div>
+                        </div>
+                    {% endif %}
+                {% else %}
+                    <div class="card">
+                        <div class="card-body text-center font-weight-bold">
+                            You need to be logged in to access this feature! <a href='/brickonomy/login' class="btn-outline-dark">Log in now!</a>
                         </div>
                     </div>
-                </div>
+                {% endif %}
             </div>
-            <p></p>
-            {% endif %}
-        {% endfor %}
-        {% else %}
-            <div class="card">
-                <div class="card-body text-center font-weight-bold">
-                    Seems like you haven't added any figures yet!
-                </div>
+            <div>
+                <div style="height: 55px"></div>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <td><h5 class="font-weight-bold">Statistics</h5></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Total minifigures: {{ user_minifigures_count }}</td>
+                        </tr>
+                        <tr>
+                            {% if user_minifigures_value > 0 %}
+                                <td>Total value: {{ user_minifigures_value }}$</td>
+                            {% else %}
+                                <td>Total value: 0$</td>
+                            {% endif %}
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-        {% endif %}
-        {% else %}
-            <div class="card">
-            <div class="card-body text-center font-weight-bold">
-                You need to be logged in to access this feature! <a href='/brickonomy/login' class="btn-outline-dark">Log in now!</a>
-            </div>
-            </div>
-        {% endif %}
-        </div>
-    <div>
-        <div style="height: 55px"><p>‎</p></div>
-
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <td><h5 class="font-weight-bold">Statistics</h5></td>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td> Total minifigures: {{ user_minifigures_count }}</td>
-                    </tr>
-                    <tr>
-                        {% if user_minifigures_value > 0 %}
-                            <td>Total value: {{ user_minifigures_value }}$</td>
-                        {% else %}
-                            <td>Total value: 0$</td>
-                        {% endif %}
-                    </tr>
-                </tbody>
-            </table>
         </div>
     </div>
-</div>
 {% endblock content %}
