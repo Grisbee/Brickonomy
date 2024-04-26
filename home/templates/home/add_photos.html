@@ -42,18 +42,18 @@
     <form action="" method="post" enctype="multipart/form-data">
     {% csrf_token %}
 
-        <input  type="file" id="myCheckbox"  name="images" multiple class="custom-btn">
+        <input  type="file" id="myCheckbox"  name="images" multiple class="custom-btn font">
 
-        <button class="custom-btn2">Submit</button>
+        <button class="custom-btn2 font">Submit</button>
 
     </form>
             <div style="height: 5px"></div>
-            <div class="text-center text-muted">Max 5 photos allowed</div>
+            <div class="text-center text-muted font">Max 5 photos allowed</div>
         </div>
     </div>
 
     <div style="height: 20px"></div>
-<h3 class="text-center font-weight-bold">Current Photos:</h3>
+<h3 class="text-center font-weight-bold font">Current Photos:</h3>
     <div class="row justify-content-center">
     {% for img in images %}
         <div class="text-center" style="height: 220px; width: 220px">

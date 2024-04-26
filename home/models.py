@@ -31,9 +31,13 @@ class Set(models.Model):
 
 
 class Minifigure(models.Model):
+    ERA_CHOICES = (("option1", "Prequels"), ("option2", "Original Trilogy"), ("option3", "Sequels"),
+                   ("option4", "Clone Wars"), ("option5", "Rebels"), ("option6", "TV Series"),
+                   ("option7", "Legends"), ("option8", "Games"), ("option9", "Other"))
+
     character_name = models.CharField(max_length=30)
     if_custom = models.BooleanField()
-    era = models.CharField(max_length=20)
+    era = models.CharField(max_length=20, choices=ERA_CHOICES)
     description = models.TextField()
     estimated_price = models.FloatField()
     quantity = models.IntegerField()

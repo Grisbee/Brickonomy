@@ -7,31 +7,40 @@
         border-radius: 355px;
         box-shadow: 0 15px 2px rgba(0, 0, 0, 0.1);
     }
-    .btn{}
+    .name{
+        color: black;
+        border-radius: 15px;
+    }
+    .name:hover{
+        transition: 0.4s;
+        color: white;
+        background-color: black;
+        text-decoration: none;
+        border: black;
+        border-radius: 3px;
+    }
+
     </style>
 <div class="container mt-4">
     <div class="row justify-content-center">
         <div class="col-md-10">
-            {% for minifigure in minifigure_post %}
-                <div class="card">
+            {% for minifigure in minifigures%}
+                <div id="figure_list" class="card">
                     <div class="card-body">
                         <div class="media mb-4">
                             <img src="{{ minifigure.image.url }}" alt="Minifigure Image" class="img-outline mr-3">
                             <div class="media-body">
-                                <h3 class="mt-0"> <a href='{% url 'minifigures-post' minifigure.id %}' class="btn-outline-dark font-weight-bold">{{ minifigure.character_name }}</a>
-                                    <small class="text-muted">
+                                <h3 class="font"> <a href='{% url 'minifigures-post' minifigure.id %}' class="font-weight-bold name">{{ minifigure.character_name }}</a>
+                                    <small class="text-muted font">
                                         {% if minifigure.if_custom %}
                                             Custom Minifigure <span class="badge bg-dark text-white float-right">{{ minifigure.estimated_price }}$  </span>
                                         {% else %}
-                                            Official Minifigure <span class="float-right">{{ minifigure.estimated_price }}$  </span>
+                                            Official Minifigure <span class="badge bg-dark text-white float-right">{{ minifigure.estimated_price }}$  </span>
                                         {% endif %}
                                     </small>
                                 </h3>
-                                <small class="text-muted">By <a href="{% url "view_profile" minifigure.owner.id %}" class="btn-outline-dark">{{ minifigure.owner }}</a></small>
-                                <p class="mb-1">
-                                </p>
-                                <p class="mb-1"></p>
-                                <p class="mb-1" ><em>{{ minifigure.description }}</em></p>
+                                <small class="text-muted font">By <a href="{% url "view_other_profile" minifigure.owner.id %}" class="name">{{ minifigure.owner }}</a></small>
+                                <p class="font" style="margin-top: 5px"><em>{{ minifigure.description }}</em></p>
                             </div>
                         </div>
                     </div>
@@ -40,14 +49,25 @@
             {% endfor %}
         </div>
     <div class="col-md-2">
-        <div class="card" style="width: 120px; height: 200px;background-color: #7d6608; color: white; border-width: 3px; border-color: black; border-radius: 7px">
-                <label for="filter" style="margin: 10px" class="font"> Filter by:</label>
-                <select id="filter" style="background-color: white; color:black; margin: 5px">
-                    <option value="all">All</option>
-                    <option value="option1">1</option>
-                    <option value="option2">2</option>
-                    <option value="option3">3</option>
+        <div class="card" style="width: 160px; height: 200px;background-color: white; color: black; border-width: 1px; border-color: lightgray; border-radius: 7px">
+            <form method="post" id="filter">
+                {% csrf_token %}
+                <label for="filters" style="margin: 10px" class="font"> Sort by:</label>
+                <select id="filters" name="filters" style="border-color: darkgray; background-color: whitesmoke; margin: 5px">
+                    <option value="date_added">Date Added</option>
+                    <option value="most_expensive">Most Expensive</option>
+                    <option value="least_expensive">Least Expensive</option>
+                    <option value="name">Alphabetically</option>
                 </select>
+
+                <label for="display_figures" style="margin: 10px" class="font"> Filter: </label>
+                <select id="display_figures" name="display_figures" style="border-color: darkgray; background-color: whitesmoke; margin: 5px; width: 143px">
+                    <option value="all">All</option>
+                    <option value="custom">Custom</option>
+                    <option value="original">Original</option>
+                </select>
+                <button type="submit" form="filter" style="margin-left: 30px; margin-top: 10px">Apply</button>
+                </form>
         </div>
     </div>
     </div>

@@ -31,27 +31,25 @@
 </style>
 <div class="container mt-4">
     <div class="row justify-content-center">
-        <div class="col-md-10">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
                     <div class="media mb-6">
                         <img src="{{ minifigure.image.url }}" alt="Minifigure Image" class="img-outline account-img mr-3">
                         <div class="media-body">
-                            <h3 class="mt-0"><b>{{ minifigure.character_name }}</b> <span class="badge bg-dark text-white float-right" >{{ object.estimated_price }}$</span></h3>
-                            <small class="text-muted">
+                            <h3 class="font"><b>{{ minifigure.character_name }}</b> <span class="badge bg-dark text-white float-right" >{{ object.estimated_price }}$</span></h3>
+                            <small class="text-muted font">
                                 {% if minifigure.if_custom %}
                                 Custom Minifigure
                                 {% else %}
                                 Official Minifigure
                                 {% endif %}
                             </small>
-                            <small class="text-muted">By <a href="#" class="btn-outline-dark">{{ object.owner }}</a></small>
-                            <p class="mb-1"></p>
-                            <p class="mb-1"></p>
-                            <p class="mb-1"><em>{{ object.description }}</em></p>
+                            <small class="text-muted">by <a href="#" class="btn-outline-dark">{{ object.owner }}</a></small>
+                            <p class="font" style="margin-top: 5px"><em>{{ object.description }}</em></p>
                             <div class="bottom-text text-right">
                                 {% if minifigure.owner.username == user.username %}
-                                <small class="text-muted">
+                                <small class="text-muted font">
                                     <a href="{% url "minifigures-update" minifigure.id %}" class="text-muted">Edit</a>
                                     <div></div>
                                     <a href="{% url "minifigures-delete" minifigure.id %}" class="text-muted">Delete</a>
@@ -68,15 +66,14 @@
                 <div class="text-center">
                     <div style="height: 50px"></div>
                     {% for image in images %}
-                    <img class="img-outline2" src="{{ image.images.url }}" alt="Image">
-                    <div style="height: 20px"></div>
+                            <img class="img-outline2" src="{{ image.images.url }}" alt="Image" style="width: 400px; height: 400px; margin-bottom: 20px; margin-left: 20px">
                     {% endfor %}
             </div>
             {% if user.username == minifigure.owner.username %}
                 <div  style="height: 30px"></div>
-                <div class="text-center"><a class="custom-btn" href="{% url "add-photos" minifigure.id %}">Add more photos</a></div>
+                <div class="text-center"><a class="custom-btn font" href="{% url "add-photos" minifigure.id %}">Add more photos</a></div>
                 <div  style="height: 50px"></div>
-                <div class="text-center"><a class="custom-btn" href={% url "remove-photos" minifigure.id %}>Delete Photos</a></div>
+                <div class="text-center"><a class="custom-btn font" href={% url "remove-photos" minifigure.id %}>Delete Photos</a></div>
                 <div  style="height: 50px"></div>
             {% endif %}
         </div>

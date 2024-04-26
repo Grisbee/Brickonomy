@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
@@ -39,6 +40,13 @@ def profile(request):
     return render(request, 'users/profile.html', contex)
 
 
-class ProfileView(DetailView):
+class ProfileView(DetailView, LoginRequiredMixin ):
     model = User
     template_name = 'users/view_profile.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['logged_user'] = self.request.user
+        return context
+
+

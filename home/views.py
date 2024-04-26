@@ -51,6 +51,7 @@ class MinifigureDetailView(DetailView):
         context['images'] = images
         return context
 
+
 class MinifigureCreateView(LoginRequiredMixin, CreateView):
     model = Minifigure
     fields = ['character_name', 'if_custom', 'era', 'description', 'estimated_price',
@@ -88,6 +89,7 @@ class MinifigureDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Minifigure
     template_name = 'home/minifigure_delete.html'
     success_url = '/brickonomy/minifigures/'
+
     def test_func(self):
         post = self.get_object()
         if self.request.user == post.owner:
@@ -95,12 +97,36 @@ class MinifigureDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return False
 
 
-
 class ExploreMinifigures(ListView):
     model = Minifigure
     template_name = 'home/explore_minifigures.html'
-    context_object_name = 'minifigure_post'
-    ordering = 'date_added'
+    context_object_name = 'minifigures'
+
+
+    def post(self, request):
+        display_minifigures = request.POST['display_figures']
+        filtering = request.POST['filters']
+        ordering = '-date_added'
+
+        if filtering == "most_expensive":
+            ordering = '-estimated_price'
+        elif filtering == "name":
+            ordering = 'character_name'
+        elif filtering == "least_expensive":
+            ordering = 'estimated_price'
+        elif filtering == "date_added":
+            ordering = '-date_added'
+
+        if display_minifigures == "all":
+            minifigures = Minifigure.objects.all()
+        elif display_minifigures == "custom":
+            minifigures = Minifigure.objects.filter(if_custom=True)
+        elif display_minifigures == "original":
+            minifigures = Minifigure.objects.filter(if_custom=False)
+
+        minifigures_ordered = minifigures.order_by(ordering)
+
+        return render(request, "home/explore_minifigures.html", {"minifigures": minifigures_ordered})
 
 
 class AddPhotos(LoginRequiredMixin, UserPassesTestMixin, View):
@@ -113,22 +139,22 @@ class AddPhotos(LoginRequiredMixin, UserPassesTestMixin, View):
             return True
         return False
 
-
     def get(self, request, pk):
         fig = Minifigure.objects.filter(id=pk).first()
         images = Gallery.objects.filter(minifigure=fig)
         #images = Gallery.objects.filter(id =pk)
         return render(request, "home/add_photos.html", {'images': images})
+
     def post(self, request, pk):
         images = request.FILES.getlist('images')
         fig = Minifigure.objects.filter(id=pk).first()
 
         for image in images:
-            Gallery.objects.create(images= image, minifigure=fig)
+            Gallery.objects.create(images=image, minifigure=fig)
 
         fig = Minifigure.objects.filter(id=pk).first()
         images = Gallery.objects.filter(minifigure=fig)
-        return render(request, "home/add_photos.html", {'images': images} )
+        return render(request, "home/add_photos.html", {'images': images})
 
 
 class RemovePhotos(LoginRequiredMixin, UserPassesTestMixin, View):
@@ -153,8 +179,6 @@ class RemovePhotos(LoginRequiredMixin, UserPassesTestMixin, View):
         image_path = image_to_delete.images.path
         image_to_delete.delete()
         os.remove(image_path)
-
-
 
         fig = Minifigure.objects.filter(id=pk).first()
         images = Gallery.objects.filter(minifigure=fig)

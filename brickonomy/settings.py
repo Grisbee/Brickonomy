@@ -140,13 +140,12 @@ LOGIN_REDIRECT_URL = "/brickonomy"
 """
 to do:
 -add search bar
--add filters
+-stats table displaying while being logged out needs fixing
 -home page
 -sets
--add gallery to posts
--change it so the change photos option doesnt pop up in explore section
--change it so only the user can update the figure
+-all figures made by a certain user appearing while opening his profile
 """
 # superuser: uzytkownik: pawel haslo: kanapa123
+
 
 

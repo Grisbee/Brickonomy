@@ -31,6 +31,7 @@ urlpatterns = [
     path('brickonomy/logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
     path('brickonomy/profile', users_views.profile, name='profile'),
     path('brickonomy/profile/<int:pk>/', users_views.ProfileView.as_view(), name='view_profile'),
+    path('brickonomy/view_profile/<int:pk>/', users_views.ProfileView.as_view(), name='view_other_profile'),
     path('brickonomy/', include("home.urls")),
 ]
 
